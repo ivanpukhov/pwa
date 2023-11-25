@@ -78,6 +78,17 @@ function checkForNewArticle(articles) {
 	}
 }
 
+document.getElementById('enable-notifications').addEventListener('click', function() {
+	Notification.requestPermission().then(permission => {
+		if (permission === 'granted') {
+			console.log('Разрешение на показ уведомлений получено');
+		} else {
+			console.log('Разрешение на показ уведомлений отклонено');
+		}
+	});
+});
+
+
 // Отображение уведомлений
 function showNotification(title) {
 	// Изменение: Проверка разрешения на уведомления
