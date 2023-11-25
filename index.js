@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Запрос новостей с сервера или из кеша
 function loadData() {
-	fetch('http://localhost:3000/api/news')
+	fetch('/api/news')
 		.then(response => {
 			if (!response.ok) {
 				throw new Error('Ошибка сетевого запроса');
