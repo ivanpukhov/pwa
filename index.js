@@ -17,26 +17,13 @@ if (Notification.permission === 'default') {
 
 // Загрузка новостей при загрузке страницы и каждые 10 секунд
 document.addEventListener('DOMContentLoaded', () => {
-	// Запрос разрешения на уведомления
-	if (Notification.permission === 'default') {
-		Notification.requestPermission().then(permission => {
-			if (permission === 'granted') {
-				console.log('Разрешение на показ уведомлений получено');
-			} else {
-				console.log('Разрешение на показ уведомлений отклонено');
-			}
-		});
-	}
-
 	loadData();
 	setInterval(loadData, 10000);
-}); //!!!!
-
-
+});
 
 // Запрос новостей с сервера или из кеша
 function loadData() {
-	fetch('/api/news')
+	fetch('http://localhost:3000/api/news')
 		.then(response => {
 			if (!response.ok) {
 				throw new Error('Ошибка сетевого запроса');
@@ -78,17 +65,6 @@ function checkForNewArticle(articles) {
 	}
 }
 
-document.getElementById('enable-notifications').addEventListener('click', function() {
-	Notification.requestPermission().then(permission => {
-		if (permission === 'granted') {
-			console.log('Разрешение на показ уведомлений получено');
-		} else {
-			console.log('Разрешение на показ уведомлений отклонено');
-		}
-	});
-});
-
-
 // Отображение уведомлений
 function showNotification(title) {
 	// Изменение: Проверка разрешения на уведомления
@@ -101,7 +77,6 @@ function showNotification(title) {
 }
 
 // Загрузка новостей из кеша
-// Загрузка новостей из кеша
 function loadFromCache() {
 	if (!navigator.serviceWorker) {
 		console.log('Service Worker не поддерживается этим браузером.');
@@ -113,10 +88,6 @@ function loadFromCache() {
 	navigator.serviceWorker.onmessage = event => {
 		if (event.data.type === 'cached-news' && event.data.articles) {
 			updateNewsList(event.data.articles);
-		} else {
-			// Изменение: обновление интерфейса, если в кеше нет новостей
-			const newsContainer = document.getElementById('news-container');
-			newsContainer.innerHTML = '<p>Новости недоступны в автономном режиме.</p>';
 		}
 	};
 }

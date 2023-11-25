@@ -74,7 +74,7 @@ self.addEventListener('message', event => {
 
 // Функция для предоставления кешированных новостей
 function serveCachedNews(event) {
-  const newsApiUrl = '/api/news'; // URL  API для новостей
+  const newsApiUrl = 'http://localhost:3000/api/news'; // URL  API для новостей
   caches.match(newsApiUrl)
     .then(response => {
       if (response) {
