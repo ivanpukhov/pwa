@@ -17,9 +17,22 @@ if (Notification.permission === 'default') {
 
 // Загрузка новостей при загрузке страницы и каждые 10 секунд
 document.addEventListener('DOMContentLoaded', () => {
+	// Запрос разрешения на уведомления
+	if (Notification.permission === 'default') {
+		Notification.requestPermission().then(permission => {
+			if (permission === 'granted') {
+				console.log('Разрешение на показ уведомлений получено');
+			} else {
+				console.log('Разрешение на показ уведомлений отклонено');
+			}
+		});
+	}
+
 	loadData();
 	setInterval(loadData, 10000);
-});
+}); //!!!!
+
+
 
 // Запрос новостей с сервера или из кеша
 function loadData() {
