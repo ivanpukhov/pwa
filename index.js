@@ -42,7 +42,7 @@ if ('serviceWorker' in navigator) {
   function updateNewsList(articles) {
 	const newsContainer = document.getElementById('news-container');
 	newsContainer.innerHTML = '';
-	articles.forEach(article => {
+	articles.slice(0,10).forEach(article => {
 	  const articleElem = document.createElement('div');
 	  articleElem.className = 'news-article';
 	  articleElem.innerHTML = `<h3>${article.title}</h3><p>Опубликовано ${article.author} в ${article.publicationDate}</p>`;
