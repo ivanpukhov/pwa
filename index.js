@@ -77,6 +77,7 @@ function showNotification(title) {
 }
 
 // Загрузка новостей из кеша
+// Загрузка новостей из кеша
 function loadFromCache() {
 	if (!navigator.serviceWorker) {
 		console.log('Service Worker не поддерживается этим браузером.');
@@ -88,6 +89,10 @@ function loadFromCache() {
 	navigator.serviceWorker.onmessage = event => {
 		if (event.data.type === 'cached-news' && event.data.articles) {
 			updateNewsList(event.data.articles);
+		} else {
+			// Изменение: обновление интерфейса, если в кеше нет новостей
+			const newsContainer = document.getElementById('news-container');
+			newsContainer.innerHTML = '<p>Новости недоступны в автономном режиме.</p>';
 		}
 	};
 }
